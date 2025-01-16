@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import WishList from "../pages/WishList";
+
 
 const initialState = {
   cart: [],
@@ -13,20 +13,18 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action) => {
-      
-    
+    addToCart:(state,action) => {
       const obj={...action.payload}
-      const existingItem=state.cart.find((ele)=>ele.id===obj.id)
-      
-
+      let existingItem=state.cart.find((ele)=>ele.id===action.payload.id)
       if (existingItem) {
         toast.warning("item allready added!",{position:"top-right"})
-      } else {
+      } 
+      else {
         // Add the new item to the cart
-        action.payload.quantity=1;
-     state.cart.push(action.payload);
-     toast.success("item added!",{position:"top-left"})
+        obj.quantity=1;
+        toast.success("item added!",{position:"top-left"})
+     state.cart.push(obj);
+    
       }
     },
     removeFromCart: (state, action) => {
